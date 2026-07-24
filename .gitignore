@@ -1,0 +1,17 @@
+.env
+.env.local
+.env.development
+.env.production
+*.env
+node_modules/
+npm-debug.log*
+dist/
+build/
+prisma/*.db
+prisma/*.db-journal
+*.sqlite
+*.sqlite-journal
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
