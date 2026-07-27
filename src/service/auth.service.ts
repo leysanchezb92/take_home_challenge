@@ -4,11 +4,16 @@ import { prisma } from '../config/db';
 
 const JWT_SECRET = process.env.JWT_ACCESS || 'secret_fallback';
 
+interface User {
+  id: string;
+  email: string;
+}
+
 export class AuthService {
-  static async register(email: string, password: string) {
+  static async register(email: string, password: string): Promise<User> {
     const existingUser = await prisma.user.findUnique({ where: { email } });
     if (existingUser) {
-      throw new Error('El correo ya está registrado');
+      throw new Error('Email already in use');
     }
 
     const hashedPassword = await bcrypt.hash(password, 10);
@@ -23,7 +28,7 @@ export class AuthService {
     return { id: user.id, email: user.email };
   }
 
-  static async login(email: string, password: string) {
+  static async login(email: string, password: string): Promise<{ token: string; user: User }> {
     const user = await prisma.user.findUnique({ where: { email } });
     if (!user) {
       throw new Error('invalid credentials');
