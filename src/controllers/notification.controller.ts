@@ -25,7 +25,7 @@ export class NotificationController {
 
             return res.status(201).json(notification);
         } catch (error: any) {
-            return res.status(500).json({ error: error.message });
+            return res.status(400).json({ error: error.message });
         }
     }
 
@@ -40,7 +40,7 @@ export class NotificationController {
             const notifications = await NotificationService.getAllByUser({ userId });
             return res.status(200).json(notifications);
         } catch (error: any) {
-            return res.status(500).json({ error: error.message });
+            return res.status(400).json({ error: error.message });
         }
     }
 
